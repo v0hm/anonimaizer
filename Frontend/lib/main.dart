@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 
 void main() {
   runApp(const Application());
@@ -35,7 +36,7 @@ class RequestPage extends StatefulWidget {
 
 class _RequestPageState extends State<RequestPage> {
   int currentImage = 1;
-  AssetImage _displayedImage = const AssetImage("assets/placeholder.jpeg");
+  ImageProvider _displayedImage = const AssetImage("assets/placeholder.jpeg");
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +55,17 @@ class _RequestPageState extends State<RequestPage> {
               child: Image(
                 image: _displayedImage,
               ),
-              onPressed: () {
+              onPressed: () async {
+                FilePickerResult? pickResult = await FilePicker.platform.pickFiles(
+                  allowMultiple: false,
+                  type: FileType.image
+                );
 
+                if (pickResult == null || pickResult.files.isEmpty) return;
+                var bytes = pickResult.files.single.bytes;
+                setState(() {
+                  _displayedImage = Image.memory(bytes!).image;
+                });
               },
             ),
             flex: 15,
@@ -87,7 +97,6 @@ class _RequestPageState extends State<RequestPage> {
                     currentImage = 1;
                     _displayedImage = const AssetImage("assets/placeholder.jpeg");
                   }
-
                 });
               },
               style: ButtonStyle(
