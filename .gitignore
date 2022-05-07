@@ -14,7 +14,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# lib/  || This messes with the Flutter project
 lib64/
 parts/
 sdist/
