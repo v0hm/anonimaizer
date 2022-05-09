@@ -4,9 +4,6 @@ from werkzeug.utils import secure_filename
 
 filename = ""
 
-def edit(image):
-    return image
-
 def main_page():
     return render_template("template.html")
 
