@@ -1,0 +1,4 @@
+enum RequestPageStates {
+  initial,
+  imageProcessed
+}
