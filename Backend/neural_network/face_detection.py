@@ -4,8 +4,9 @@ from mtcnn.mtcnn import MTCNN
 
 
 class FaceDetector:
-    def __init__(self, filename):
+    def __init__(self, filename, result_filename):
         self.filename = filename
+        self.resultFilename = result_filename
 
         self.pixels = pyplot.imread(filename)
 
@@ -15,7 +16,7 @@ class FaceDetector:
     def get_faces_coordinates(self):
         return self.faces
 
-    def draw_faces(self):
+    def draw_faces(self, draw_keypoints=False):
         pyplot.imshow(self.pixels)
         pyplot.grid(False)
         pyplot.axis("off")
@@ -28,10 +29,11 @@ class FaceDetector:
             face_rectangle = Rectangle((x, y), width, height, fill=False, color="red")
             image_context.add_patch(face_rectangle)
 
-            # Face keypoints
-            for key, value in face["keypoints"].items():
-                keypoint = Circle(value, radius=2, color="red")
-                image_context.add_patch(keypoint)
+            if draw_keypoints:
+                # Face keypoints
+                for key, value in face["keypoints"].items():
+                    keypoint = Circle(value, radius=2, color="red")
+                    image_context.add_patch(keypoint)
 
-        pyplot.savefig(self.filename, bbox_inches="tight", pad_inches=0)
+        pyplot.savefig(self.resultFilename, bbox_inches="tight", pad_inches=0)
         pyplot.close()

@@ -1,3 +1,4 @@
+import config
 from flask import send_from_directory
 
 
@@ -10,4 +11,4 @@ def getStaticFile(path):
 
 
 def getContent(path):
-    return send_from_directory("~/.cache/nn-anonymizer", path)
+    return send_from_directory(config.upload_folder, path)
