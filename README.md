@@ -90,6 +90,7 @@ The app is served on port 80 and can either be accessed for a browser or install
   - [x] Face recognition on images
   - [ ] Custom face generation
   - [ ] Face replacement
+  - [ ] Delete cached files (cron job?)
 - [ ] Frontend
   - [x] Basic frontend
   - [x] Integration with the API

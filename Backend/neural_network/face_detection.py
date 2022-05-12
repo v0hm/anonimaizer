@@ -17,6 +17,9 @@ class FaceDetector:
 
     def draw_faces(self):
         pyplot.imshow(self.pixels)
+        pyplot.grid(False)
+        pyplot.axis("off")
+
         image_context = pyplot.gca()
 
         for face in self.faces:
@@ -30,5 +33,5 @@ class FaceDetector:
                 keypoint = Circle(value, radius=2, color="red")
                 image_context.add_patch(keypoint)
 
-        pyplot.savefig(self.filename)
+        pyplot.savefig(self.filename, bbox_inches="tight", pad_inches=0)
         pyplot.close()

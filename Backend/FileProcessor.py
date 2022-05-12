@@ -55,9 +55,10 @@ def postImage():
 
     uploaded_file_name = secure_filename(file.filename)
     saved_file_name = secrets.token_urlsafe(42) + "." + getFileExtension(uploaded_file_name)
-    file.save(os.path.join(upload_folder, saved_file_name))
+    saved_file_path = os.path.join(upload_folder, saved_file_name)
+    file.save(saved_file_path)
 
-    processSavedFile(saved_file_name)
+    processSavedFile(saved_file_path)
 
     return {
         "result": {
