@@ -50561,7 +50561,7 @@ return A.a_(null,r)}})
 return A.a0($async$ub,r)},
 k7(){var s=0,r=A.a1(t.H),q=this,p,o,n,m,l,k,j,i,h,g,f,e,d
 var $async$k7=A.Y(function(a,b){if(a===1)return A.Z(b,r)
-while(true)switch(s){case 0:n=A.aiO("POST",A.ut("http://localhost:8080/api/process"))
+while(true)switch(s){case 0:n=A.aiO("POST",A.ut("http://small.knyaz.tech:80/api/process"))
 m=A.d(q.f,"_imageBytes")
 l="file."+A.d(q.r,"_imageBytesExtension")
 k=A.a4l(m,t.eH)
@@ -50577,7 +50577,7 @@ break
 case 3:j=A
 i=A
 h=B.c
-g="http://localhost:8080/content"
+g="http://small.knyaz.tech:80/content"
 f=J
 e=J
 d=B.ac
