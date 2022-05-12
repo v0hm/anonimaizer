@@ -17,7 +17,14 @@ class RequestPage extends StatefulWidget {
 }
 
 class _RequestPageState extends State<RequestPage> {
-  final String _server = "http://localhost:8080";
+  /*
+  * This is the URL used to access the server
+  * Changes of this value affect the website ONLY after running ./build.sh
+  *
+  * Debug value: http://localhost:8080
+  * Production value: http://small.knyaz.tech:80
+   */
+  final String _server = "http://small.knyaz.tech:80";
 
   RequestPageStates _pageState = RequestPageStates.initial;
 

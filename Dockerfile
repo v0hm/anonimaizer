@@ -16,4 +16,6 @@ RUN apt install -y python3 pip
 RUN apt install -y ffmpeg libsm6 libxext6
 RUN python3 -m pip install tensorflow mtcnn matplotlib flask
 
+ENV PRODUCTION-MODE=true
+
 CMD cd /home/root/app/Backend && python3 backend.py
