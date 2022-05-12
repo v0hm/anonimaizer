@@ -15,6 +15,11 @@ def getStaticFile(path):
     return send_from_directory("../Frontend-Build", path)
 
 
+@app.route("/content/<path:path>")
+def getContent(path):
+    return send_from_directory("~/.cache/nn-anonymizer", path)
+
+
 api = Api(app)
 api.add_resource(NetworkApi, '/api')
 
