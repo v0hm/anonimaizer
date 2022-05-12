@@ -18,4 +18,4 @@ RUN python3 -m pip install tensorflow mtcnn matplotlib flask
 
 ENV PRODUCTION-MODE=true
 
-CMD cd /home/root/app/Backend && python3 backend.py
+CMD export PRODUCTION-MODE=true && cd /home/root/app/Backend && python3 backend.py
