@@ -60,40 +60,40 @@
 * Backend
   * [Python](https://www.python.org/) & [Flask](https://flask.palletsprojects.com/en/2.1.x/) - API Server
   * [MTCNN](https://pypi.org/project/mtcnn/) - Face detection based on multitask cascaded convolutional networks
-  * ...
 * Frontend
   * [Dart](https://dart.dev/) & [Flutter](https://flutter.dev/) - User interface
-  * ...
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 ## Getting Started
 ### Prerequisites
-WIP
+* [Docker](https://www.docker.com/) - v20.0+ 
 
 ### Installation
-WIP
+1. Clone the repository
+2. Build the image from Dockerfile (`docker build -t <tag> .`)
+3. Run the container & forward port 8080 => 80 (`docker run --name <name> -p 80:8080/tcp -p 80:8080/udp -d <tag>`)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 ## Usage
-WIP
+The app is served on port 80 and can either be accessed for a browser or installed as a PWA.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 ## Roadmap
 - [ ] Backend
-  - [ ] Basic API server
+  - [x] Basic API server
   - [x] Face recognition on images
-  - [ ] Face generation
-  - ...
+  - [ ] Custom face generation
+  - [ ] Face replacement
 - [ ] Frontend
   - [x] Basic frontend
-  - [ ] Integration with the API
-  - ...
+  - [x] Integration with the API
+  - [ ] Visual improvements
 
 See the [open issues](https://github.com/v0hm/anonimaizer/issues) for a full list of proposed features (and known issues).
 
@@ -108,7 +108,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Acknowledgments
 * [K. Zhang, Z. Zhang, Z. Li and Y. Qiao, "Joint Face Detection and Alignment Using Multitask Cascaded Convolutional Networks"](https://ieeexplore.ieee.org/abstract/document/7553523) - Face detection algorithm
-* ...
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
