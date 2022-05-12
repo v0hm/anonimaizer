@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Backend/Backend.iml" filepath="$PROJECT_DIR$/Backend/Backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NeuralNetwork/NeuralNetwork.iml" filepath="$PROJECT_DIR$/NeuralNetwork/NeuralNetwork.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/anonimaizer.iml" filepath="$PROJECT_DIR$/.idea/anonimaizer.iml" />
     </modules>
   </component>

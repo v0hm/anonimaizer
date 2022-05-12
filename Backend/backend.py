@@ -1,27 +1,29 @@
-from flask import Flask, send_from_directory
-from flask_restful import Api
-from NetworkApi import NetworkApi
+from flask import Flask
+from FileProcessor import *
+from PageServer import *
 
 app = Flask(__name__)
 
 
-@app.route("/")
-def getMainPage():
-    return getStaticFile("index.html")
+@app.route("/", methods=["GET"])
+def _getMainPage():
+    return getMainPage()
 
 
-@app.route("/<path:path>")
-def getStaticFile(path):
-    return send_from_directory("../Frontend-Build", path)
+@app.route("/<path:path>", methods=["GET"])
+def _getStaticFile(path):
+    return getStaticFile(path)
 
 
-@app.route("/content/<path:path>")
-def getContent(path):
-    return send_from_directory("~/.cache/nn-anonymizer", path)
+@app.route("/content/<path:path>", methods=["GET"])
+def _getContent(path):
+    return getContent(path)
 
 
-api = Api(app)
-api.add_resource(NetworkApi, '/api')
+@app.route("/api/process", methods=["POST"])
+def _postImage():
+    return postImage()
+
 
 if __name__ == '__main__':
     app.run(debug=False)
