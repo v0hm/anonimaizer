@@ -26,4 +26,4 @@ def _postImage():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, port=config.getPort(), host="0.0.0.0")
+    app.run(debug=False, port=8080, host="0.0.0.0")
