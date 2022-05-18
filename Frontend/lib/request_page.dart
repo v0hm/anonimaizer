@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/services.dart';
 import 'package:frontend/request_page_states.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_html/html.dart' as html;
@@ -15,10 +17,28 @@ class RequestPage extends StatefulWidget {
 }
 
 class _RequestPageState extends State<RequestPage> {
+  /*
+  * This is the URL used to access the server
+  * Changes of this value affect the website ONLY after running ./build.sh
+  *
+  * Debug value: http://localhost:8080
+  * Production value: http://small.knyaz.tech:80
+   */
+  final String _server = "http://small.knyaz.tech:80";
+
   RequestPageStates _pageState = RequestPageStates.initial;
-  
+
+  late Uint8List _imageBytes;
+  late String _imageBytesExtension;
   ImageProvider _image = const AssetImage("assets/placeholder1.jpeg");
+
   String _buttonText = "Anonymize Me";
+
+  _RequestPageState() {
+    rootBundle.load("assets/placeholder1.jpeg").then((data) =>
+        _imageBytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+    _imageBytesExtension = "jpeg";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,28 +124,44 @@ class _RequestPageState extends State<RequestPage> {
     );
 
     if (pickResult == null || pickResult.files.isEmpty) return;
-    var bytes = pickResult.files.single.bytes;
+    _imageBytes = pickResult.files.single.bytes!;
+    _imageBytesExtension = pickResult.files.single.extension!;
+
     setState(() {
-      _image = Image.memory(bytes!).image;
+      _image = Image.memory(_imageBytes).image;
     });
   }
 
   Future<void> downloadImage() async {
-    http.Response response = await http.get(
-      Uri.parse("https://cdn.pixabay.com/photo/2020/09/23/14/38/woman-5596173_960_720.jpg")
-    );
+    var base64 = base64Encode(_imageBytes);
 
-    var _base64 = base64Encode(response.bodyBytes);
-
-    final _downloadAnchor = html.AnchorElement(href: 'data:image/jpeg;base64,$_base64');
-    _downloadAnchor.download = 'AnonymizerImage.jpg';
-    _downloadAnchor.click();
-    _downloadAnchor.remove();
+    final downloadAnchor = html.AnchorElement(href: 'data:image/jpeg;base64,$base64');
+    downloadAnchor.download = 'AnonymizerResult.jpeg';
+    downloadAnchor.click();
+    downloadAnchor.remove();
   }
 
-  void processImage() {
+  Future<void> processImage() async {
+    var processRequest = http.MultipartRequest("POST", Uri.parse(_server + "/api/process"));
+    processRequest.files.add(http.MultipartFile.fromBytes(
+      "file", _imageBytes, filename: "file." + _imageBytesExtension
+    ));
+
+    var processResponse = await processRequest.send();
+    if (processResponse.statusCode == 200) {
+      var responseBodyText = await processResponse.stream.bytesToString();
+      var responseBody = jsonDecode(responseBodyText);
+
+      var resultFile = responseBody["result"]["fileName"];
+      var resultPath = _server + "/content" + resultFile;
+      var resultUri = Uri.parse(resultPath);
+
+      http.Response imageResponse = await http.get(resultUri);
+      _imageBytes = imageResponse.bodyBytes;
+    }
+
     setState(() {
-      _image = const AssetImage("assets/placeholder2.jpeg");
+      _image = Image.memory(_imageBytes).image;
       _buttonText = "Back";
     });
 
