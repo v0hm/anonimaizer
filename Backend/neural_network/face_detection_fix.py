@@ -15,18 +15,20 @@ class FaceDetector:
     def get_faces_coordinates(self):
         return self.faces
     
-    def draw_faces(self):
-        for face in self.faces:
-            img = Image.open(self.filename)
-            idraw = ImageDraw.Draw(img)
+    def draw_faces(self, draw_keypoints=False):
+        img = Image.open(self.filename)
+        idraw = ImageDraw.Draw(img)
 
-            for key, value in face["keypoints"].items():
-                x, y, width, height = face["box"]
-                idraw.rectangle((x, y, x + width, y + height), fill = None, outline = "red")
-                
-                x, y = value
-                r = 2
-                idraw.ellipse((x - r, y - r, x + r, y + r), fill = "red", outline = "red")
-                
-            img.save(self.resultFilename)
-            img.close()
+        for face in self.faces:
+            x, y, width, height = face["box"]
+            idraw.rectangle((x, y, x + width, y + height), fill = None, outline = "red")
+
+            if draw_keypoints:
+                for key, value in face["keypoints"].items():                
+                    x, y = value
+                    r = 2
+                    idraw.ellipse((x - r, y - r, x + r, y + r), fill = "red", outline = "red")
+
+        img.save(self.resultFilename)
+        img.close()
+        
